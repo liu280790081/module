@@ -3,5 +3,5 @@ server:
 spring:
   application:
     name: module-elasticsearch
-#  profiles:
-#    active: dev
+  profiles:
+    active: dev

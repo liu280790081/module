@@ -1,51 +1,52 @@
 package com.module.orange.controller;
 
-import com.module.orange.dto.ElasticSearchResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import com.module.orange.dto.ESTestParam;
+import com.module.orange.dto.ESTestResult;
+import org.apache.http.Header;
+import org.apache.http.HttpHost;
+import org.apache.http.RequestLine;
+import org.apache.http.util.EntityUtils;
+import org.elasticsearch.client.Request;
+import org.elasticsearch.client.Response;
+import org.elasticsearch.client.RestClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import javax.validation.Valid;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/search")
 public class SearchController {
-//
-//    @Inject
-//    private TransportClient client;
 
-    //搜索自动联想
-    @GetMapping("/keyword/{key}")
-    public List<ElasticSearchResult> findIndexRecordByName(@PathVariable("key") String key) {
+    @Autowired
+    private RestClient restClient;
 
-        System.out.println("hello word!" + key);
-//        // 构造查询请求
-//        QueryBuilder bq = QueryBuilders.matchQuery("name.pinyin", key);
-//        SearchRequestBuilder searchRequest = client.prepareSearch("medcl").setTypes("folks");
-//
-//        // 设置查询条件和分页参数
-//        int start = 0;
-//        int size = 5;
-//        searchRequest.setQuery(bq).setFrom(start).setSize(size);
-//
-//        // 获取返回值，并进行处理
-//        SearchResponse response = searchRequest.execute().actionGet();
-//        SearchHits shs = response.getHits();
-//        List<ElasticSearchResult> esResultList = new ArrayList<>();
-//        for (SearchHit hit : shs) {
-//            ElasticSearchResult esResult = new ElasticSearchResult();
-//            double score = hit.getScore();
-//            BigDecimal b = new BigDecimal(score);
-//            score = b.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
-//            String name = (String) hit.getSourceAsMap().get("name");
-//            System.out.println("score:" + score + "name:" + name);
-//            esResult.setScore(score);
-//            esResult.setName(name);
-//            esResultList.add(esResult);
-//        }
-//        return esResultList;
-        return null;
+    /**
+     * 搜索检测
+     * @param param
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/test")
+    public ESTestResult findIndexRecordByName(@Valid @RequestBody ESTestParam param) throws Exception {
+        Request request = new Request(param.getMethod(), param.getUri());
+        if(null != param.getParamMap() && param.getParamMap().size() > 0) {
+            for (Map.Entry<String, String> entry: param.getParamMap().entrySet()) {
+                request.addParameter(entry.getKey(), entry.getValue());
+            }
+        }
+
+        Response response = restClient.performRequest(request);
+        RequestLine requestLine = response.getRequestLine();
+        HttpHost host = response.getHost();
+        int statusCode = response.getStatusLine().getStatusCode();
+        Header[] headers = response.getHeaders();
+        String responseBody = EntityUtils.toString(response.getEntity());
+        return new ESTestResult(requestLine, host, statusCode, headers, responseBody);
     }
 
 }

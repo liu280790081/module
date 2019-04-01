@@ -11,7 +11,7 @@ package com.module.orange.config;//package com.orange.search.config;
 //import java.net.UnknownHostException;
 //
 //@Configuration
-//public class ElasticSearchConfig {
+//public class ESTransportConfig {
 //
 //    private String host = "39.105.65.204";
 //
