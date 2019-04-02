@@ -6,9 +6,11 @@ import org.apache.http.Header;
 import org.apache.http.HttpHost;
 import org.apache.http.RequestLine;
 import org.apache.http.util.EntityUtils;
+import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.client.Request;
 import org.elasticsearch.client.Response;
 import org.elasticsearch.client.RestClient;
+import org.elasticsearch.common.xcontent.XContentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,7 +34,7 @@ public class SearchController {
      * @throws Exception
      */
     @PostMapping("/test")
-    public ESTestResult findIndexRecordByName(@Valid @RequestBody ESTestParam param) throws Exception {
+    public ESTestResult test(@Valid @RequestBody ESTestParam param) throws Exception {
         Request request = new Request(param.getMethod(), param.getUri());
         if(null != param.getParamMap() && param.getParamMap().size() > 0) {
             for (Map.Entry<String, String> entry: param.getParamMap().entrySet()) {
@@ -49,4 +51,24 @@ public class SearchController {
         return new ESTestResult(requestLine, host, statusCode, headers, responseBody);
     }
 
+    /**
+     * 搜索检测
+     * @param param
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/test")
+    public String search(@Valid @RequestBody ESTestParam param) throws Exception {
+        IndexRequest request = new IndexRequest(
+                "posts",
+                "doc",
+                "1");
+        String jsonString = "{" +
+                "\"user\":\"kimchy\"," +
+                "\"postDate\":\"2013-01-30\"," +
+                "\"message\":\"trying out Elasticsearch\"" +
+                "}";
+        request.source(jsonString, XContentType.JSON);
+        return "sdfsdfds";
+    }
 }

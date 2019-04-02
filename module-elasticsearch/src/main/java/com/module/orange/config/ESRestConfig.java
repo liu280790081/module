@@ -5,7 +5,7 @@ import org.apache.http.impl.nio.reactor.IOReactorConfig;
 import org.elasticsearch.client.NodeSelector;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
-import org.elasticsearch.client.sniff.Sniffer;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -25,8 +25,7 @@ public class ESRestConfig {
     private String keyStorePass;
 
 
-    @Bean
-    public RestClient ESRestClient() {
+    private RestClientBuilder getRestClientBuilder() {
         RestClientBuilder builder = RestClient.builder(
                 new HttpHost(host, port, scheme));
 
@@ -79,9 +78,27 @@ public class ESRestConfig {
         });
 
         builder.setNodeSelector(NodeSelector.SKIP_DEDICATED_MASTERS);
-        return builder.build();
+        return builder;
     }
 
+//    /**
+//     * 基础版
+//     * @return
+//     */
+//    @Bean
+//    public RestClient ESRestClient() {
+//        return this.getRestClientBuilder().build();
+//    }
+
+    /**
+     * 高级版
+     *
+     * @return
+     */
+    @Bean
+    public RestHighLevelClient RestHighLevelClient() {
+        return new RestHighLevelClient(this.getRestClientBuilder());
+    }
 
 //    @Bean
 //    public Sniffer Sniffer(){
