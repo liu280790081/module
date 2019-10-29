@@ -1,4 +1,4 @@
-package com.module.orange.config;//package com.orange.search.config;
+package orange.elasticsearch.config;//package com.orange.search.config;
 //
 //import org.elasticsearch.client.transport.TransportClient;
 //import org.elasticsearch.common.settings.Settings;

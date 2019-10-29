@@ -1,4 +1,4 @@
-package com.module.orange.dto;
+package orange.elasticsearch.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

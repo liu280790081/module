@@ -1,7 +1,7 @@
-package com.module.orange.application.impl;
+package orange.elasticsearch.application.impl;
 
-import com.module.orange.application.SearchApplication;
-import com.module.orange.application.TestApplication;
+import orange.elasticsearch.application.SearchApplication;
+import orange.elasticsearch.application.TestApplication;
 import org.springframework.stereotype.Component;
 
 @Component

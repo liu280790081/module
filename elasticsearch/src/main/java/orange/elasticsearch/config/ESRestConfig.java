@@ -1,4 +1,4 @@
-package com.module.orange.config;
+package orange.elasticsearch.config;
 
 import org.apache.http.HttpHost;
 import org.apache.http.impl.nio.reactor.IOReactorConfig;
