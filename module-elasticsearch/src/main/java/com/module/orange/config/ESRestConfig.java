@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.nio.file.Path;
 
-@Configuration
+//@Configuration
 public class ESRestConfig {
 
     private String host = "39.105.65.204";

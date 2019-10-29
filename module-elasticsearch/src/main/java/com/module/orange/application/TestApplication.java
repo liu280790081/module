@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public interface SearchApplication {
+public interface TestApplication {
+
+    String a = "";
 
     @Autowired
     TransportClient client = null;
@@ -18,4 +20,6 @@ public interface SearchApplication {
     static void test() {
 
     }
+
+
 }

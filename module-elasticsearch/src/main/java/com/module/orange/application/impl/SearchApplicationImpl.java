@@ -1,16 +1,20 @@
 package com.module.orange.application.impl;
 
 import com.module.orange.application.SearchApplication;
+import com.module.orange.application.TestApplication;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SearchApplicationImpl implements SearchApplication {
+public class SearchApplicationImpl implements SearchApplication, TestApplication {
 
 //    @Autowired
 //    private TransportClient client;
 
 
     public void add(String name) {
+
+        TestApplication.test();
+
 //        try {
 //            XContentBuilder content = XContentFactory.jsonBuilder()
 //                    .startObject()
@@ -47,4 +51,8 @@ public class SearchApplicationImpl implements SearchApplication {
 //        }
     }
 
+    @Override
+    public String testDefault() {
+        return null;
+    }
 }

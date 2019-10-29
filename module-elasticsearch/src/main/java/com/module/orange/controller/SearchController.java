@@ -24,32 +24,32 @@ import java.util.Map;
 @RequestMapping("/search")
 public class SearchController {
 
-    @Autowired
-    private RestClient restClient;
+//    @Autowired
+//    private RestClient restClient;
 
-    /**
-     * 搜索检测
-     * @param param
-     * @return
-     * @throws Exception
-     */
-    @PostMapping("/test")
-    public ESTestResult test(@Valid @RequestBody ESTestParam param) throws Exception {
-        Request request = new Request(param.getMethod(), param.getUri());
-        if(null != param.getParamMap() && param.getParamMap().size() > 0) {
-            for (Map.Entry<String, String> entry: param.getParamMap().entrySet()) {
-                request.addParameter(entry.getKey(), entry.getValue());
-            }
-        }
-
-        Response response = restClient.performRequest(request);
-        RequestLine requestLine = response.getRequestLine();
-        HttpHost host = response.getHost();
-        int statusCode = response.getStatusLine().getStatusCode();
-        Header[] headers = response.getHeaders();
-        String responseBody = EntityUtils.toString(response.getEntity());
-        return new ESTestResult(requestLine, host, statusCode, headers, responseBody);
-    }
+//    /**
+//     * 搜索检测
+//     * @param param
+//     * @return
+//     * @throws Exception
+//     */
+//    @PostMapping("/test")
+//    public ESTestResult test(@Valid @RequestBody ESTestParam param) throws Exception {
+//        Request request = new Request(param.getMethod(), param.getUri());
+//        if(null != param.getParamMap() && param.getParamMap().size() > 0) {
+//            for (Map.Entry<String, String> entry: param.getParamMap().entrySet()) {
+//                request.addParameter(entry.getKey(), entry.getValue());
+//            }
+//        }
+//
+//        Response response = restClient.performRequest(request);
+//        RequestLine requestLine = response.getRequestLine();
+//        HttpHost host = response.getHost();
+//        int statusCode = response.getStatusLine().getStatusCode();
+//        Header[] headers = response.getHeaders();
+//        String responseBody = EntityUtils.toString(response.getEntity());
+//        return new ESTestResult(requestLine, host, statusCode, headers, responseBody);
+//    }
 
     /**
      * 搜索检测
