@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ido85.icip.system.table.dao.OnlTableFieldMapper">
+
+	<!-- 执行select list语句 -->
+	<select id="queryListBySql" parameterType="java.lang.String" resultType="java.util.Map">
+		${sqlStr}
+	</select>
+
+	<!-- 执行select count语句 -->
+	<select id="queryCountBySql" parameterType="java.lang.String" resultType="java.lang.Integer">
+		${sqlStr}
+	</select>
+	
+	<!-- 执行编辑语句 -->
+	<update id="editFormData" parameterType="java.lang.String">
+		${sqlStr}
+	</update>
+	
+	<!-- 执行select form语句 -->
+	<select id="queryFormData" parameterType="java.lang.String" resultType="java.util.Map">
+		${sqlStr}
+	</select>
+	
+	<!-- 执行select 查询集合 -->
+	<select id="queryListData" parameterType="java.lang.String" resultType="java.util.Map">
+		${sqlStr}
+	</select>
+	
+	<!-- 执行delete 删除数据 -->
+	<delete id="deleteAutoList" parameterType="java.lang.String">
+		${sqlStr}
+	</delete>
+	
+	<!-- 执行select 分页查询集合 -->
+	<select id="selectPageBySql" parameterType="java.lang.String" resultType="java.util.Map">
+		${sqlStr}
+	</select>
+	
+	<!-- 执行update语句 据说可以防注入 -->
+	<update id="executeUpdateSQL" parameterType="java.util.Map">
+		${execute_sql_string}
+	</update>
+	
+	<!-- 执行insert语句 据说可以防注入 -->
+	<insert id="executeInsertSQL" parameterType="java.util.Map">
+		${execute_sql_string}
+	</insert>
+
+
+</mapper>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ido85.icip.system.table.dao.OnlTableHeadMapper">
+
+    <!-- 执行ddl语句 -->
+    <update id="executeDDL" parameterType="java.lang.String">
+		${sqlStr}
+	</update>
+
+    <!-- 执行查询语句 -->
+    <select id="queryList" parameterType="java.lang.String" resultType="java.util.Map">
+		${sqlStr}
+	</select>
+
+    <select id="getContainFKScheduleList" resultType="com.ido85.icip.system.table.entity.OnlTableHead">
+        select h.*
+        from onl_table_head h
+        join onl_table_field f on f.head_id = h.id
+        where main_table =  (select table_name from onl_table_head where id = #{pkTableId})
+    </select>
+
+    <!-- ##############################数据库实体表################################# -->
+
+    <delete id="dropDBTable">
+        drop table if exists ${tableSchema}.${tableName}
+    </delete>
+
+    <select id="getDBTableList" resultType="java.util.Map">
+        select t.table_name, t.table_comment
+        from information_schema.tables t
+        left join onl_table_head th on t.table_name = th.table_name
+        where t.table_schema = #{tableSchema} and th.table_name is null
+        <if test="keyword != null and keyword != ''">
+            and (t.table_name like concat('%', #{keyword}, '%') or t.table_comment like concat('%', #{keyword}, '%'))
+        </if>
+        order by t.table_name
+    </select>
+
+    <select id="getDBTableInfo" resultType="com.ido85.icip.system.table.dto.DbTable">
+		select t.table_schema, t.table_name, t.table_comment
+        from information_schema.tables t
+        where t.table_schema = #{tableSchema} and t.table_name = #{tableName}
+	</select>
+
+    <select id="getDBTableColumnList" resultType="com.ido85.icip.system.table.dto.DbColumn">
+        select column_name, data_type, column_comment, numeric_precision, numeric_scale, character_maximum_length,
+        if('YES' = is_nullable, 1, 0) is_nullable, if('PRI' = column_key, 1, 0) is_key
+        from information_schema.columns
+        where table_schema = #{tableSchema} and table_name = #{tableName}
+    </select>
+
+    <select id="checkDBTableExist" resultType="java.lang.Boolean">
+        select if(count(table_name) > 0, 1, 0) res
+        from information_schema.tables
+        where table_schema = #{tableSchema} and table_name = #{tableName}
+    </select>
+
+    <!-- ##############################数据库实体表数据################################# -->
+    <delete id="deleteDBTableData">
+        delete from ${tableSchema}.${tableName} where 1=1
+        <foreach collection="pkParam.entrySet()" index="key" item="value" >
+            and ${key} in
+            <foreach collection="value" item="i" open="(" close=")" separator=",">
+                #{i}
+            </foreach>
+        </foreach>
+    </delete>
+
+    <select id="getDBTableExist" resultType="java.lang.Long">
+        select count(1)
+        from ${tableSchema}.${tableName}
+        where 1=1
+        <foreach collection="pkParam.entrySet()" index="key" item="value">
+            and ${key} in
+            <foreach collection="value" item="i" open="(" close=")" separator=",">
+                #{i}
+            </foreach>
+        </foreach>
+    </select>
+
+    <select id="getDBTableData" resultType="java.util.Map">
+        select *
+        from ${tableSchema}.${tableName}
+        where 1=1
+        <foreach collection="pkParam.entrySet()" index="key" item="value">
+            and ${key} = #{value}
+        </foreach>
+    </select>
+
+    <sql id="dbTableDataListSql">
+        select *
+        from ${tableSchema}.${tableName}
+        where 1=1
+        <if test="fkParam != null and fkParam.size() > 0">
+            <foreach collection="fkParam.entrySet()" index="key" item="value">
+                and ${key} = #{value}
+            </foreach>
+        </if>
+    </sql>
+
+    <select id="getDBTableDataList" resultType="java.util.Map">
+        <include refid="dbTableDataListSql"/>
+    </select>
+
+    <select id="getDBTableDataPage" resultType="java.util.Map">
+        <include refid="dbTableDataListSql"/>
+    </select>
+
+
+</mapper>
