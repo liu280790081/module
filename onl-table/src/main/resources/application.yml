@@ -11,8 +11,24 @@ server:
     # 每块buffer的空间大小,越小的空间被利用越充分
     buffer-size: 1024
     # 是否分配的直接内存
+
 spring:
   application:
     name: onl-table
   profiles:
     active: dev
+
+mybatis-plus:
+  # 实体扫描路径
+  type-aliases-package: orange.**.entity
+  # xml文件扫描路径
+  mapper-locations: classpath*:orange/**/dao/*.xml
+  global-config:
+    banner: false  # 禁止打印banner
+    db-config:
+    # 逻辑删除配置
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  configuration:
+    useGeneratedKeys: true
+    map-underscore-to-camel-case: true
