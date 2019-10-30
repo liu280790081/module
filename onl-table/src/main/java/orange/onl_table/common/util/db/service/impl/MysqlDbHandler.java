@@ -1,11 +1,11 @@
 package orange.onl_table.common.util.db.service.impl;
 
 
-import com.ido85.icip.system.table.common.constant.CommonConstant;
-import com.ido85.icip.system.table.common.exception.OnlException;
-import com.ido85.icip.system.table.common.util.db.service.IDbHandler;
-import com.ido85.icip.system.table.dto.DbColumn;
-import com.ido85.icip.system.table.dto.DbTable;
+import orange.onl_table.common.constant.CommonConstant;
+import orange.onl_table.common.exception.OnlException;
+import orange.onl_table.common.util.db.service.IDbHandler;
+import orange.onl_table.dto.DbColumn;
+import orange.onl_table.dto.DbTable;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Objects;

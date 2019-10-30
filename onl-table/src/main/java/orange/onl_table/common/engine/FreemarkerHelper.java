@@ -13,12 +13,12 @@ public class FreemarkerHelper {
 
     private FreemarkerHelper() {}
 
-    public static final String TABLE_TEMPLATE = "com/ido85/icip/system/table/common/engine/tableTemplate.ftl";
+    public static final String TABLE_TEMPLATE = "orange/onl_table/common/engine/tableTemplate.ftl";
 
     private static Configuration b;
 
     static {
-        b = new Configuration(Configuration.VERSION_2_3_28);
+        b = new Configuration(Configuration.VERSION_2_3_29);
         b.setNumberFormat("0.#####################");
         b.setClassForTemplateLoading(FreemarkerHelper.class, "/");
     }

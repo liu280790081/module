@@ -4,7 +4,7 @@ package orange.onl_table.dao;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.ido85.icip.system.table.entity.OnlTableField;
+import orange.onl_table.entity.OnlTableField;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

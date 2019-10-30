@@ -1,11 +1,10 @@
 package orange.onl_table.dto;
 
 
-
-import com.ido85.icip.system.table.entity.OnlTableField;
-import com.ido85.icip.system.table.entity.OnlTableHead;
-import com.ido85.icip.system.table.entity.OnlTableIndex;
 import lombok.Data;
+import orange.onl_table.entity.OnlTableField;
+import orange.onl_table.entity.OnlTableHead;
+import orange.onl_table.entity.OnlTableIndex;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

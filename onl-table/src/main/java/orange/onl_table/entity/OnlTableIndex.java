@@ -4,8 +4,8 @@ package orange.onl_table.entity;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ido85.icip.system.table.common.constant.CommonConstant;
 import lombok.Data;
+import orange.onl_table.common.constant.CommonConstant;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -67,7 +67,7 @@ public class OnlTableIndex implements Serializable {
                         && Objects.equals(indexType, that.indexType));
     }
 
-    public OnlTableIndex newInsert(String id, String headId){
+    public OnlTableIndex newInsert(String id, String headId) {
         this.id = id;
         this.headId = headId;
         this.createTime = new Date();
@@ -75,7 +75,7 @@ public class OnlTableIndex implements Serializable {
         return this;
     }
 
-    public OnlTableIndex newInsert(OnlTableIndex now, String id, String headId){
+    public OnlTableIndex newInsert(OnlTableIndex now, String id, String headId) {
         this.id = id;
         this.headId = headId;
         this.indexName = now.indexName;
@@ -88,7 +88,7 @@ public class OnlTableIndex implements Serializable {
         return this;
     }
 
-    public OnlTableIndex newUpdate(OnlTableIndex now, OnlTableHead head){
+    public OnlTableIndex newUpdate(OnlTableIndex now, OnlTableHead head) {
         if (!Objects.equals(
                 Arrays.asList(this.indexName, this.indexField, this.indexType),
                 Arrays.asList(now.indexName, now.indexField, now.indexType))) {

@@ -4,10 +4,10 @@ package orange.onl_table.entity;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ido85.icip.system.table.common.constant.CommonConstant;
-import com.ido85.icip.system.table.common.util.ConvertUtils;
-import com.ido85.icip.system.table.dto.DbColumn;
 import lombok.Data;
+import orange.onl_table.common.constant.CommonConstant;
+import orange.onl_table.common.util.ConvertUtils;
+import orange.onl_table.dto.DbColumn;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.format.annotation.DateTimeFormat;
 

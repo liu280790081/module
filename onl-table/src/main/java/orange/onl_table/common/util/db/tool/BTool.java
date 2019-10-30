@@ -2,12 +2,12 @@ package orange.onl_table.common.util.db.tool;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.ido85.icip.system.table.common.constant.CommonConstant;
-import com.ido85.icip.system.table.common.exception.OnlException;
-import com.ido85.icip.system.table.common.query.QueryGenerator;
-import com.ido85.icip.system.table.common.util.UUIDGenerator;
-import com.ido85.icip.system.table.entity.OnlTableField;
 import lombok.extern.slf4j.Slf4j;
+import orange.onl_table.common.constant.CommonConstant;
+import orange.onl_table.common.exception.OnlException;
+import orange.onl_table.common.query.QueryGenerator;
+import orange.onl_table.common.util.UUIDGenerator;
+import orange.onl_table.entity.OnlTableField;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
@@ -15,7 +15,8 @@ import java.util.*;
 @Slf4j
 public class BTool {
 
-    private BTool() {}
+    private BTool() {
+    }
 
     public static void a(String tbName, List<OnlTableField> var1, StringBuffer sql) {
         sql.append("SELECT ");
@@ -142,7 +143,7 @@ public class BTool {
                 }
                 return value;
             case "datetime":
-                if(!value.getClass().isAssignableFrom(Date.class) ){
+                if (!value.getClass().isAssignableFrom(Date.class)) {
                     throw new OnlException(field.getDbFieldTxt() + "入参格式不正确！！！");
                 }
                 return value;

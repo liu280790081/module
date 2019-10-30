@@ -1,7 +1,7 @@
 package orange.onl_table.dto;
 
-import com.ido85.icip.system.table.entity.OnlTableHead;
 import lombok.Data;
+import orange.onl_table.entity.OnlTableHead;
 
 import java.util.List;
 

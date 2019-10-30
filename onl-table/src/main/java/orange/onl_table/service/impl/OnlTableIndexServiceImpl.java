@@ -3,10 +3,10 @@ package orange.onl_table.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.ido85.icip.system.table.dao.OnlTableHeadMapper;
-import com.ido85.icip.system.table.dao.OnlTableIndexMapper;
-import com.ido85.icip.system.table.entity.OnlTableIndex;
-import com.ido85.icip.system.table.service.OnlTableIndexService;
+import orange.onl_table.dao.OnlTableHeadMapper;
+import orange.onl_table.dao.OnlTableIndexMapper;
+import orange.onl_table.entity.OnlTableIndex;
+import orange.onl_table.service.OnlTableIndexService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

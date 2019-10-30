@@ -1,11 +1,11 @@
 package orange.onl_table.common.util.db;
 
 
-import com.ido85.icip.system.table.common.config.DataBaseConfig;
-import com.ido85.icip.system.table.entity.OnlTableField;
-import com.ido85.icip.system.table.entity.OnlTableHead;
-import com.ido85.icip.system.table.entity.OnlTableIndex;
 import lombok.Data;
+import orange.onl_table.common.config.DataBaseConfig;
+import orange.onl_table.entity.OnlTableField;
+import orange.onl_table.entity.OnlTableHead;
+import orange.onl_table.entity.OnlTableIndex;
 
 import java.util.List;
 
@@ -45,7 +45,7 @@ public class TableConfigModel {
     private DataBaseConfig dbConfig;
 
 
-    public TableConfigModel init(DataBaseConfig dbConfig, OnlTableHead head, List<OnlTableField> fields){
+    public TableConfigModel init(DataBaseConfig dbConfig, OnlTableHead head, List<OnlTableField> fields) {
         this.tableName = head.getTableName();
 //        this.pkType = head.getIdType();
 //        this.PkSequence = head.getIdSequence();

@@ -2,6 +2,6 @@ server:
   port: 8088
 spring:
   application:
-    name: module-elasticsearch
+    name: elasticsearch
   profiles:
     active: dev

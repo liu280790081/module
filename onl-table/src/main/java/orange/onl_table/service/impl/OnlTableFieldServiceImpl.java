@@ -5,20 +5,16 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.ido85.common.platform.base.BaseService;
-import com.ido85.icip.system.dict.dto.InDictDto;
-import com.ido85.icip.system.dict.entity.DictItem;
-import com.ido85.icip.system.dict.service.DictItemService;
-import com.ido85.icip.system.table.common.constant.CommonConstant;
-import com.ido85.icip.system.table.common.util.ConvertUtils;
-import com.ido85.icip.system.table.common.util.db.tool.BTool;
-import com.ido85.icip.system.table.dao.OnlTableFieldMapper;
-import com.ido85.icip.system.table.entity.OnlTableField;
-import com.ido85.icip.system.table.entity.OnlTableHead;
-import com.ido85.icip.system.table.service.OnlTableFieldService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import orange.onl_table.common.constant.CommonConstant;
+import orange.onl_table.common.util.ConvertUtils;
+import orange.onl_table.common.util.db.tool.BTool;
+import orange.onl_table.dao.OnlTableFieldMapper;
+import orange.onl_table.entity.OnlTableField;
+import orange.onl_table.entity.OnlTableHead;
+import orange.onl_table.service.OnlTableFieldService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,10 +23,10 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class OnlTableFieldServiceImpl extends BaseService<OnlTableFieldMapper, OnlTableField> implements OnlTableFieldService {
+public class OnlTableFieldServiceImpl extends ServiceImpl<OnlTableFieldMapper, OnlTableField> implements OnlTableFieldService {
 
-    @Autowired
-    private DictItemService dictItemService;
+//    @Autowired
+//    private DictItemService dictItemService;
 
     @Override
     public Map<String, Object> queryAuto(String tbName, String headId, Map<String, Object> params, List<String> needList) {
@@ -87,12 +83,11 @@ public class OnlTableFieldServiceImpl extends BaseService<OnlTableFieldMapper, O
                 if (Objects.isNull(entry.getValue()) || "".equals(entry.getValue())) {
                     continue;
                 }
-                if (dictFieldMap.containsKey(entry.getKey())) {
-                    OnlTableField field = dictFieldMap.get(entry.getKey());
-
-                    DictItem dictItem = dictItemService.findOne(field.getDictField(), String.valueOf(entry.getValue()));
-                    r.put(entry.getKey(), dictItem.getDictValue());
-                }
+//                if (dictFieldMap.containsKey(entry.getKey())) {
+//                    OnlTableField field = dictFieldMap.get(entry.getKey());
+//                    DictItem dictItem = dictItemService.findOne(field.getDictField(), String.valueOf(entry.getValue()));
+//                    r.put(entry.getKey(), dictItem.getDictValue());
+//                }
             }
             return r;
         }).collect(Collectors.toList()));
@@ -254,9 +249,9 @@ public class OnlTableFieldServiceImpl extends BaseService<OnlTableFieldMapper, O
             var8.put("mode", var7.getQueryMode());
             var8.put("field", var7.getDbFieldName());
             var8.put("dict", var7.getDictField());
-            if (StringUtils.isNotBlank(var7.getDictField())) {
-                var8.put("dictList", dictItemService.findDictList(new InDictDto(var7.getDictField())));
-            }
+//            if (StringUtils.isNotBlank(var7.getDictField())) {
+//                var8.put("dictList", dictItemService.findDictList(new InDictDto(var7.getDictField())));
+//            }
             ++var5;
             if (var5 > 2) {
                 var8.put("hidden", "1");

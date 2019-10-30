@@ -1,7 +1,7 @@
 package orange.onl_table.common.query;
 
 
-import com.ido85.icip.system.table.common.util.ConvertUtils;
+import orange.onl_table.common.util.ConvertUtils;
 
 /**
  * Query 规则 常量

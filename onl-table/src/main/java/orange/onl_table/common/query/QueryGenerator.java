@@ -3,9 +3,9 @@ package orange.onl_table.common.query;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.ido85.icip.system.table.common.constant.CommonConstant;
-import com.ido85.icip.system.table.common.util.ConvertUtils;
 import lombok.extern.slf4j.Slf4j;
+import orange.onl_table.common.constant.CommonConstant;
+import orange.onl_table.common.util.ConvertUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 
 import java.beans.PropertyDescriptor;
@@ -123,7 +123,7 @@ public class QueryGenerator {
 //                }
 
                 // 添加 判断是否有区间值
-                if(parameterMap != null ) {
+                if (parameterMap != null) {
                     String endValue, beginValue;
                     if (parameterMap.containsKey(name + BEGIN)) {
                         beginValue = parameterMap.getString(name + BEGIN).trim();
@@ -134,7 +134,7 @@ public class QueryGenerator {
                         endValue = parameterMap.getString(name + END).trim();
                         addQueryByRule(queryWrapper, name, type, endValue, QueryRuleEnum.LE);
                     }
-                    if(parameterMap.containsKey(name)){
+                    if (parameterMap.containsKey(name)) {
                         addQueryByRule(queryWrapper, name, type, parameterMap.getString(name), QueryRuleEnum.EQ);
                     }
                 }
@@ -153,7 +153,7 @@ public class QueryGenerator {
                             for (int k = 1; k < vals.length; k++) {
                                 j = j.or().like(field, vals[k]);
                             }
-                            return j;
+//                            return j;
                         });
                     } else {
                         queryWrapper.and(j -> j.like(field, vals[0]));

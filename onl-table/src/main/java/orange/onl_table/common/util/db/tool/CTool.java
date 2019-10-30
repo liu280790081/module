@@ -2,7 +2,7 @@ package orange.onl_table.common.util.db.tool;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.ido85.icip.system.table.entity.OnlTableField;
+import orange.onl_table.entity.OnlTableField;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -31,7 +31,7 @@ public class CTool {
             var3.put(var5, var2.getDoubleValue(var5));
             return "#{" + var5 + ",jdbcType=DOUBLE}";
         } else if ("BigDecimal".equals(var4)) {
-            if(!var2.containsKey(var5)){
+            if (!var2.containsKey(var5)) {
                 return "";
             }
             var3.put(var5, new BigDecimal(var2.getString(var5)));

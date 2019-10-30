@@ -1,10 +1,10 @@
 package orange.onl_table.common.util.db.service;
 
 
-import com.ido85.icip.system.table.common.exception.OnlException;
-import com.ido85.icip.system.table.common.util.db.service.impl.MysqlDbHandler;
-import com.ido85.icip.system.table.dto.DbColumn;
-import com.ido85.icip.system.table.dto.DbTable;
+import orange.onl_table.common.exception.OnlException;
+import orange.onl_table.common.util.db.service.impl.MysqlDbHandler;
+import orange.onl_table.dto.DbColumn;
+import orange.onl_table.dto.DbTable;
 
 public interface IDbHandler {
 

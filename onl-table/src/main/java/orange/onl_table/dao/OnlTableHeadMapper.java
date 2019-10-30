@@ -2,9 +2,9 @@ package orange.onl_table.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.ido85.icip.system.table.dto.DbColumn;
-import com.ido85.icip.system.table.dto.DbTable;
-import com.ido85.icip.system.table.entity.OnlTableHead;
+import orange.onl_table.dto.DbColumn;
+import orange.onl_table.dto.DbTable;
+import orange.onl_table.entity.OnlTableHead;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

@@ -2,8 +2,8 @@ package orange.onl_table.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.ido85.icip.system.table.entity.OnlTableField;
-import com.ido85.icip.system.table.entity.OnlTableHead;
+import orange.onl_table.entity.OnlTableField;
+import orange.onl_table.entity.OnlTableHead;
 
 import java.util.List;
 import java.util.Map;

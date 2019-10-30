@@ -4,12 +4,12 @@ package orange.onl_table.service;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.ido85.icip.system.table.common.exception.OnlException;
-import com.ido85.icip.system.table.common.util.db.TableConfigModel;
-import com.ido85.icip.system.table.dto.DbTable;
-import com.ido85.icip.system.table.dto.TableModel;
-import com.ido85.icip.system.table.entity.OnlTableField;
-import com.ido85.icip.system.table.entity.OnlTableHead;
+import orange.onl_table.common.exception.OnlException;
+import orange.onl_table.common.util.db.TableConfigModel;
+import orange.onl_table.dto.DbTable;
+import orange.onl_table.dto.TableModel;
+import orange.onl_table.entity.OnlTableField;
+import orange.onl_table.entity.OnlTableHead;
 
 import java.sql.SQLException;
 import java.util.List;

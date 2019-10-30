@@ -2,9 +2,9 @@ package orange.onl_table.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.ido85.icip.system.table.common.constant.CommonConstant;
-import com.ido85.icip.system.table.dto.DbTable;
 import lombok.Data;
+import orange.onl_table.common.constant.CommonConstant;
+import orange.onl_table.dto.DbTable;
 
 import java.io.Serializable;
 import java.util.Date;

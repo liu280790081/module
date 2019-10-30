@@ -4,27 +4,28 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.ido85.common.platform.base.BaseService;
-import com.ido85.icip.system.table.common.config.DataBaseConfig;
-import com.ido85.icip.system.table.common.constant.CommonConstant;
-import com.ido85.icip.system.table.common.engine.FreemarkerHelper;
-import com.ido85.icip.system.table.common.exception.OnlException;
-import com.ido85.icip.system.table.common.util.ConvertUtils;
-import com.ido85.icip.system.table.common.util.db.TableConfigModel;
-import com.ido85.icip.system.table.common.util.db.service.IDbHandler;
-import com.ido85.icip.system.table.common.util.db.tool.BTool;
-import com.ido85.icip.system.table.dao.OnlTableFieldMapper;
-import com.ido85.icip.system.table.dao.OnlTableHeadMapper;
-import com.ido85.icip.system.table.dto.DbColumn;
-import com.ido85.icip.system.table.dto.DbTable;
-import com.ido85.icip.system.table.dto.TableModel;
-import com.ido85.icip.system.table.entity.OnlTableField;
-import com.ido85.icip.system.table.entity.OnlTableHead;
-import com.ido85.icip.system.table.entity.OnlTableIndex;
-import com.ido85.icip.system.table.service.OnlTableFieldService;
-import com.ido85.icip.system.table.service.OnlTableHeadService;
-import com.ido85.icip.system.table.service.OnlTableIndexService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import orange.onl_table.common.config.DataBaseConfig;
+import orange.onl_table.common.constant.CommonConstant;
+import orange.onl_table.common.engine.FreemarkerHelper;
+import orange.onl_table.common.exception.OnlException;
+import orange.onl_table.common.util.ConvertUtils;
+import orange.onl_table.common.util.UUIDGenerator;
+import orange.onl_table.common.util.db.TableConfigModel;
+import orange.onl_table.common.util.db.service.IDbHandler;
+import orange.onl_table.common.util.db.tool.BTool;
+import orange.onl_table.dao.OnlTableFieldMapper;
+import orange.onl_table.dao.OnlTableHeadMapper;
+import orange.onl_table.dto.DbColumn;
+import orange.onl_table.dto.DbTable;
+import orange.onl_table.dto.TableModel;
+import orange.onl_table.entity.OnlTableField;
+import orange.onl_table.entity.OnlTableHead;
+import orange.onl_table.entity.OnlTableIndex;
+import orange.onl_table.service.OnlTableFieldService;
+import orange.onl_table.service.OnlTableHeadService;
+import orange.onl_table.service.OnlTableIndexService;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -50,7 +51,7 @@ import java.util.stream.Stream;
 
 @Slf4j
 @Service
-public class OnlTableHeadServiceImpl extends BaseService<OnlTableHeadMapper, OnlTableHead> implements OnlTableHeadService {
+public class OnlTableHeadServiceImpl extends ServiceImpl<OnlTableHeadMapper, OnlTableHead> implements OnlTableHeadService {
 
     @Autowired
     private DataBaseConfig dbConfig;
@@ -64,18 +65,18 @@ public class OnlTableHeadServiceImpl extends BaseService<OnlTableHeadMapper, Onl
     @Override
     @Transactional(rollbackFor = {Exception.class})
     public boolean addAll(TableModel model) {
-        String headId = idGenerator.next();
+        String headId = UUIDGenerator.generate();
         OnlTableHead head = model.getHead().newInsert(headId);
 
         int var6 = 0;
         List<OnlTableField> fields = model.getFields();
         for (OnlTableField var7 : fields) {
-            var7.newInsert(idGenerator.next(), headId, ++var6);
+            var7.newInsert(UUIDGenerator.generate(), headId, ++var6);
         }
 
         List<OnlTableIndex> indices = model.getIndexs();
         for (OnlTableIndex var9 : indices) {
-            var9.newInsert(idGenerator.next(), headId);
+            var9.newInsert(UUIDGenerator.generate(), headId);
         }
 
         super.save(head);
@@ -95,7 +96,7 @@ public class OnlTableHeadServiceImpl extends BaseService<OnlTableHeadMapper, Onl
         for (OnlTableField newField : Optional.ofNullable(model.getFields()).orElse(new ArrayList<>())) {
             int idx = oldFields.indexOf(new OnlTableField(newField.getId(), newField.getDbFieldName()));
             if (idx == -1) {
-                addFields.add(new OnlTableField().newInsert(newField, idGenerator.next(), head));
+                addFields.add(new OnlTableField().newInsert(newField, UUIDGenerator.generate(), head));
             } else {
                 updateFields.add(oldFields.remove(idx).newUpdate(newField, head));
             }
@@ -107,7 +108,7 @@ public class OnlTableHeadServiceImpl extends BaseService<OnlTableHeadMapper, Onl
         for (OnlTableIndex newIndex : Optional.ofNullable(model.getIndexs()).orElse(new ArrayList<>())) {
             int idx = oldIndexes.indexOf(new OnlTableIndex(newIndex));
             if (idx == -1) {
-                addIndexes.add(new OnlTableIndex().newInsert(newIndex, idGenerator.next(), head.getId()));
+                addIndexes.add(new OnlTableIndex().newInsert(newIndex, UUIDGenerator.generate(), head.getId()));
             } else {
                 updateIndexes.add(oldIndexes.remove(idx).newUpdate(newIndex, head));
             }
@@ -238,7 +239,7 @@ public class OnlTableHeadServiceImpl extends BaseService<OnlTableHeadMapper, Onl
         Objects.requireNonNull(tableNames);
 
         LambdaQueryWrapper<OnlTableHead> wrapper = new LambdaQueryWrapper<OnlTableHead>().in(OnlTableHead::getTableName, tableNames);
-        List<String> list = super.listObjsByEntity(wrapper, OnlTableHead::getTableName);
+        List<String> list = super.list(wrapper).stream().map(OnlTableHead::getTableName).collect(Collectors.toList());
 
         if (list.size() > 0) {
             throw new OnlException("表" + list + "存在");
@@ -262,13 +263,13 @@ public class OnlTableHeadServiceImpl extends BaseService<OnlTableHeadMapper, Onl
         if (table == null) {
             throw new NullPointerException("表名 : " + tableName + "，获取信息为空");
         }
-        String headId = idGenerator.next();
+        String headId = UUIDGenerator.generate();
         OnlTableHead var2 = new OnlTableHead().newInsert(table, headId);
 
         int var6 = 0;
         List<OnlTableField> var4 = new ArrayList<>();
         for (DbColumn var7 : table.getColumnVos()) {
-            var4.add(new OnlTableField().newInsert(var7, headId, idGenerator.next(), ++var6));
+            var4.add(new OnlTableField().newInsert(var7, headId, UUIDGenerator.generate(), ++var6));
         }
         save(var2);
         fieldService.saveBatch(var4);
@@ -397,7 +398,7 @@ public class OnlTableHeadServiceImpl extends BaseService<OnlTableHeadMapper, Onl
                 .eq(OnlTableField::getHeadId, code)
                 .eq(OnlTableField::getDbIsKey, CommonConstant.IS_TRUE))
                 .stream().findFirst().get().getDbFieldName();
-        final String id = idGenerator.next();
+        final String id = UUIDGenerator.generate();
         data.put(pk, id);
         if (CommonConstant.IS_TRUE_STR.equals(var3.getIsTree())) {
             fieldService.saveTreeFormData(code, var3.getTableName(), data, var3.getTreeIdField(), var3.getTreeParentIdField());
@@ -417,7 +418,7 @@ public class OnlTableHeadServiceImpl extends BaseService<OnlTableHeadMapper, Onl
                 .findFirst().map(OnlTableField::getDbFieldNameOld).get();
 
         for (JSONObject data : dataAry.toJavaList(JSONObject.class)) {
-            final String pkVal = idGenerator.next();
+            final String pkVal = UUIDGenerator.generate();
             data.put(pk, pkVal);
             if (!Objects.isNull(fkJson) && fkJson.size() > 0) {
                 for (Map.Entry<String, Object> fk : fkJson.entrySet()) {
@@ -480,7 +481,7 @@ public class OnlTableHeadServiceImpl extends BaseService<OnlTableHeadMapper, Onl
 
         for (JSONObject data : dataAry.toJavaList(JSONObject.class)) {
             boolean isAdd = StringUtils.isBlank(data.getString(pk));
-            String pkVal = isAdd ? idGenerator.next() : data.getString(pk);
+            String pkVal = isAdd ? UUIDGenerator.generate() : data.getString(pk);
 
             // 判断增、改
             if (isAdd) {
