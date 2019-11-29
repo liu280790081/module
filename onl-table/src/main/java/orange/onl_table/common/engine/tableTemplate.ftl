@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="${entity.tableName}" table="${entity.tableName}" optimistic-lock="version">
-        <comment>${entity.comment}</comment>
-		<#if entity.columns?exists>
-            <#list entity.columns as attr>
+    <class name="${head.tableName}" table="${head.tableName}" optimistic-lock="version">
+        <comment>${head.tableTxt}</comment>
+		<#if columns?exists>
+            <#list columns as attr>
                 <#if attr.dbIsKey == 1>
                     <id unsaved-value="null" name="${attr.dbFieldName}" length="${attr.dbLength}" <#switch attr.dbType?lower_case>
                         <#case "string"> type="java.lang.String" <#break>

@@ -113,6 +113,9 @@ public class LambdaTest {
         Stream ss = Stream.concat(Stream.of(11, 222, 33), Stream.of("123"));
         List aaa = (List) ss.collect(Collectors.toList());
         System.out.println(aaa);
+
+
+        System.out.println(getTestList().stream().map(a -> a.getMethod()).reduce("", (a, b) -> a + ",'" + b + "'").substring(1));
     }
 
     @Test

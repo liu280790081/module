@@ -37,7 +37,7 @@ public interface CommonConstant {
     int NUM_EIGHT = 8;
     int NUM_NINE = 9;
 
-    /**字典翻译文本后缀*/
-    String DICT_TEXT_SUFFIX = "_dictText";
-    
+    String PAGE_NO = "pageNo";
+    String PAGE_SIZE = "pageSize";
+
 }
