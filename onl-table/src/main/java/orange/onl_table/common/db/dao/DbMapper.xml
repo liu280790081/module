@@ -2,29 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="orange.onl_table.common.db.dao.DbMapper">
 
-    <!-- ##############################数据库实体表################################# -->
-
-    <select id="getDBTableList" resultType="java.util.Map">
+    <select id="selectObject" resultType="java.lang.Object">
         ${sql}
     </select>
 
-    <select id="getDBTableInfo" resultType="orange.onl_table.common.db.entity.DbTable">
-		select t.table_schema, t.table_name, t.table_comment
-        from information_schema.tables t
-        where t.table_schema = #{tableSchema} and t.table_name = #{tableName}
-	</select>
-
-    <select id="getDBTableColumnList" resultType="orange.onl_table.common.db.entity.DbColumn">
-        select column_name, data_type, column_comment, numeric_precision, numeric_scale, character_maximum_length,
-        if('YES' = is_nullable, 1, 0) is_nullable, if('PRI' = column_key, 1, 0) is_key
-        from information_schema.columns
-        where table_schema = #{tableSchema} and table_name = #{tableName}
+    <select id="tableOne" resultType="orange.onl_table.common.db.entity.DbTable">
+        ${sql}
     </select>
 
-    <select id="checkDBTableExist" resultType="java.lang.Boolean">
-        select if(count(table_name) > 0, 1, 0) res
-        from information_schema.tables
-        where table_schema = #{tableSchema} and table_name = #{tableName}
+    <select id="tableCheckExist" resultType="java.lang.Boolean">
+        ${sql}
+    </select>
+
+    <select id="tableList" resultType="orange.onl_table.common.db.entity.DbTable">
+        ${sql}
+    </select>
+
+    <select id="columnList" resultType="orange.onl_table.common.db.entity.DbColumn">
+        ${sql}
     </select>
 
 </mapper>

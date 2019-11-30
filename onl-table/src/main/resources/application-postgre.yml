@@ -3,12 +3,13 @@ spring:
     dynamic:
       datasource:
         master:
-          username: 85ido
-          password: 85ido@123
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://47.104.96.20:3306/test?useSSL=false&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useTimezone=true&serverTimezone=GMT%2B8
+          username: postgres
+          password: postgres
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://192.168.8.14:5432/test
         slave:
-          username: 85ido
-          password: 85ido@123
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://47.104.96.20:3306/test?useSSL=false&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useTimezone=true&serverTimezone=GMT%2B8
+          username: postgres
+          password: postgres
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://192.168.8.14:5432/test
+

@@ -17,8 +17,6 @@ public interface DbService {
 
     List<Map<String, String>> queryDBTableList(String keyword);
 
-    Map<String, String> queryDBTableMap(String keyword);
-
     DbTable queryDBTableInfo(String tableName);
 
     boolean checkDBTableExist(String tableName);

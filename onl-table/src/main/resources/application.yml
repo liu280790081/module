@@ -16,7 +16,7 @@ spring:
   application:
     name: onl-table
   profiles:
-    active: dev
+    active: postgre
 
 mybatis-plus:
   # 实体扫描路径

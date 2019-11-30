@@ -4,6 +4,7 @@ package orange.onl_table.common.db;
 import orange.onl_table.common.db.entity.DbColumn;
 import orange.onl_table.common.db.entity.DbTable;
 import orange.onl_table.common.db.mysql.MysqlDbHandler;
+import orange.onl_table.common.db.postgresql.PostgresqlDbHandler;
 import orange.onl_table.common.exception.OnlException;
 import orange.onl_table.entity.OnlTableIndex;
 
@@ -25,14 +26,35 @@ public interface IDbHandler {
      */
     String tableDropSql(String tbName);
 
-
+    /**
+     * 删除表sql
+     *
+     * @param table
+     * @return
+     */
     String tableDropSql(DbTable table);
 
     /**
-     * 返回数据库表sql
+     * 查询表详情
+     *
+     * @param table
      * @return
      */
-    String tableListSql(String keyword);
+    String tableOneSql(DbTable table);
+
+    /**
+     * 验证表是否存在sql
+     *
+     * @return
+     */
+    String tableCheckExistSql(DbTable table);
+
+    /**
+     * 返回数据库表sql
+     *
+     * @return
+     */
+    String tableListSql(String tableSchema, String keyword);
 
     /**
      * 字段添加sql
@@ -60,6 +82,14 @@ public interface IDbHandler {
     String columnDropSql(String tbName, String columnName);
 
     /**
+     * 字段查询集合sql
+     *
+     * @param table
+     * @return
+     */
+    String columnSelectSql(DbTable table);
+
+    /**
      * 索引删除sql
      *
      * @return
@@ -76,17 +106,12 @@ public interface IDbHandler {
     String indexDropSql(String tbName, String indexName);
 
 
-
     static IDbHandler dbHandler(String database) {
         switch (database) {
             case "mysql":
                 return new MysqlDbHandler();
-//            case "oracle":
-//                var0 = new BDbTableHandle();
-//                break;
-//            case "postgresql":
-//                var0 = new CDbTableHandle();
-//                break;
+            case "postgresql":
+                return new PostgresqlDbHandler();
 //            case "sqlserver":
 //                var0 = new DDbTableHandle();
 //                break;

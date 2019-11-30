@@ -7,9 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Data
 @Component
-@ConfigurationProperties(
-        prefix = "spring.datasource.dynamic.datasource.master"
-)
+@ConfigurationProperties(prefix = "spring.datasource.dynamic.datasource.master")
 public class DataBaseConfig {
 
     private String url;
@@ -23,7 +21,7 @@ public class DataBaseConfig {
 
     public void setUrl(String url) {
         this.url = url;
-        this.schema = url.substring(url.lastIndexOf("/") + 1, url.lastIndexOf("?"));
+        this.schema = url.contains("?") ? url.substring(url.lastIndexOf("/") + 1, url.lastIndexOf("?")) : url.substring(url.lastIndexOf("/") + 1);
         this.dbName = url.split(":")[1];
         this.dialect = dialect(dbName);
     }

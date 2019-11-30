@@ -8,7 +8,6 @@ import orange.onl_table.common.db.entity.DbColumn;
 import orange.onl_table.common.db.entity.DbTable;
 import orange.onl_table.common.db.service.DbService;
 import orange.onl_table.common.engine.FreemarkerHelper;
-import orange.onl_table.common.util.ConvertUtils;
 import orange.onl_table.entity.OnlTableField;
 import orange.onl_table.entity.OnlTableHead;
 import org.apache.commons.lang3.StringUtils;
@@ -69,40 +68,40 @@ public class DbServiceImpl implements DbService {
         var7.close();
     }
 
-    private final static String[] STARTS_WITH_TABLE_STR = new String[]{"sys", "onl", "crawler"};
-
-    @Override
-    public List<Map<String, String>> queryDBTableList(String keyword) {
-        String sql = IDbHandler.dbHandler(dbConfig.getDbName()).tableListSql(keyword);
-        return dbMapper.getDBTableList(sql, dbConfig.getSchema(), keyword).stream()
-                .filter(i -> !StringUtils.startsWithAny(i.get("table_name"), STARTS_WITH_TABLE_STR))
-                .map(m -> m.entrySet().stream().collect(Collectors.toMap(k -> ConvertUtils.camelName(k.getKey()), Map.Entry::getValue)))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public Map<String, String> queryDBTableMap(String keyword) {
-        String sql = IDbHandler.dbHandler(dbConfig.getDbName()).tableListSql(keyword);
-        return dbMapper.getDBTableList(sql, dbConfig.getSchema(), keyword).stream()
-                .filter(i -> !StringUtils.startsWithAny(i.get("table_name"), STARTS_WITH_TABLE_STR))
-                .collect(Collectors.toMap(i -> i.get("table_name"), i -> i.get("table_comment")));
-    }
-
     @Override
     public DbTable queryDBTableInfo(String tableName) {
-        DbTable table = dbMapper.getDBTableInfo(dbConfig.getSchema(), tableName);
-        table.setColumnVos(dbMapper.getDBTableColumnList(dbConfig.getSchema(), tableName));
-        return table;
+        String sql = IDbHandler.dbHandler(dbConfig.getDbName())
+                .tableOneSql(new DbTable().assemble(dbConfig.getSchema(), tableName));
+        return dbMapper.tableOne(sql);
     }
 
     @Override
     public boolean checkDBTableExist(String tableName) {
-        return dbMapper.checkDBTableExist(dbConfig.getSchema(), tableName);
+        String sql = IDbHandler.dbHandler(dbConfig.getDbName())
+                .tableCheckExistSql(new DbTable().assemble(dbConfig.getSchema(), tableName));
+        return dbMapper.tableCheckExist(sql);
+    }
+
+    private final static String[] STARTS_WITH_TABLE_STR = new String[]{"sys", "onl", "crawler"};
+
+    @Override
+    public List<Map<String, String>> queryDBTableList(String keyword) {
+        String sql = IDbHandler.dbHandler(dbConfig.getDbName()).tableListSql(dbConfig.getSchema(), keyword);
+        return dbMapper.tableList(sql).stream()
+                .filter(i -> !StringUtils.startsWithAny(i.getTableName(), STARTS_WITH_TABLE_STR))
+                .map(m -> {
+                    Map<String, String> map = new HashMap<>();
+                    map.put("tableName", m.getTableName());
+                    return map;
+                })
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<DbColumn> columnList(String tableName) {
-        return dbMapper.getDBTableColumnList(dbConfig.getSchema(), tableName);
+        String sql = IDbHandler.dbHandler(dbConfig.getDbName())
+                .columnSelectSql(new DbTable().assemble(dbConfig.getSchema(), tableName));
+        return dbMapper.columnList(sql);
     }
 
 }

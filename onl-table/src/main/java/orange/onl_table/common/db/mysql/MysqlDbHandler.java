@@ -42,14 +42,28 @@ public class MysqlDbHandler implements IDbHandler {
     }
 
     @Override
-    public String tableListSql(String keyword) {
+    public String tableOneSql(DbTable table) {
+        return "select t.table_schema, t.table_name, t.table_comment " +
+                "from information_schema.tables t " +
+                "where t.table_schema = '" + table.getTableSchema() +"' and table_name ='" + table.getTableName() +"'";
+    }
+
+    @Override
+    public String tableCheckExistSql(DbTable table) {
+        return "select if(count(table_name) > 0, 1, 0) res " +
+                "from information_schema.tables " +
+                "where table_schema = '" + table.getTableSchema() +"' and table_name ='" + table.getTableName() +"'";
+    }
+
+    @Override
+    public String tableListSql(String tableSchema, String keyword) {
         StringBuilder sql = new StringBuilder()
                 .append("select t.table_name, t.table_comment ")
                 .append("from information_schema.tables t ")
                 .append("left join onl_table_head th on t.table_name = th.table_name ")
-                .append("where t.table_schema = #{tableSchema} and th.table_name is null ");
+                .append("where t.table_schema = '").append(tableSchema).append("' and th.table_name is null ");
         if (StringUtils.isNotBlank(keyword)) {
-            sql.append("and (t.table_name like concat('%', #{keyword}, '%') or t.table_comment like concat('%', #{keyword}, '%')) ");
+            sql.append("and (t.table_name like concat('%', '" + keyword +"', '%') or t.table_comment like concat('%', '" + keyword + "', '%')) ");
         }
         sql.append("order by t.table_name");
         return sql.toString();
@@ -71,6 +85,14 @@ public class MysqlDbHandler implements IDbHandler {
     @Override
     public String columnDropSql(String tbName, String columnName) {
         return "alter table " + tbName + " drop column `" + columnName +"`";
+    }
+
+    @Override
+    public String columnSelectSql(DbTable table) {
+        return "select column_name, data_type, column_comment, numeric_precision, numeric_scale, character_maximum_length," +
+                "if('YES' = is_nullable, 1, 0) is_nullable, if('PRI' = column_key, 1, 0) is_key " +
+                "from information_schema.columns " +
+                "where table_schema = '" + table.getTableSchema() + "' and table_name = '" + table.getOldTableName() + "'";
     }
 
     @Override

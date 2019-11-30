@@ -40,5 +40,11 @@ public class DbTable {
         this.oldTableName = head.getTableNameOld();
         return this;
     }
+
+    public DbTable assemble(String tableSchema, String tableName) {
+        this.tableSchema = tableSchema;
+        this.tableName = tableName;
+        return this;
+    }
 }
 

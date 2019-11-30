@@ -13,12 +13,15 @@ public interface DbMapper {
 
     /* ------------------------------数据库实体表------------------------------------ */
 
-    List<Map<String, String>> getDBTableList(@Param("sql") String sql, @Param("tableSchema") String tableSchema, @Param("keyword") String keyword);
 
-    DbTable getDBTableInfo(@Param("tableSchema") String tableSchema, @Param("tableName") String tableName);
+    Object selectObject(@Param("sql") String sql);
 
-    List<DbColumn> getDBTableColumnList(@Param("tableSchema") String tableSchema, @Param("tableName") String tableName);
+    DbTable tableOne(@Param("sql") String sql);
 
-    Boolean checkDBTableExist(@Param("tableSchema") String tableSchema, @Param("tableName") String tableName);
+    Boolean tableCheckExist(@Param("sql") String sql);
+
+    List<DbTable> tableList(@Param("sql") String sql);
+
+    List<DbColumn> columnList(@Param("sql") String sql);
 
 }
