@@ -4,6 +4,7 @@ package orange.onl_table.common.db;
 import com.alibaba.fastjson.JSONObject;
 import orange.onl_table.common.db.entity.DbTable;
 import orange.onl_table.common.db.mysql.MysqlDataSqlHandler;
+import orange.onl_table.common.db.postgresql.PostgresqlDataSqlHandler;
 import orange.onl_table.common.exception.OnlException;
 import orange.onl_table.entity.OnlTableField;
 
@@ -25,17 +26,13 @@ public interface IDataSqlHandler {
         switch (database) {
             case "mysql":
                 return new MysqlDataSqlHandler();
-//            case "oracle":
-//                var0 = new BDbTableHandle();
-//                break;
-//            case "postgresql":
-//                var0 = new CDbTableHandle();
-//                break;
+            case "postgresql":
+                return new PostgresqlDataSqlHandler();
 //            case "sqlserver":
 //                var0 = new DDbTableHandle();
 //                break;
             default:
-                throw new OnlException("数据库[" + database+ "]不存在处理类");
+                throw new OnlException("数据库[" + database + "]不存在处理类");
         }
     }
 }
