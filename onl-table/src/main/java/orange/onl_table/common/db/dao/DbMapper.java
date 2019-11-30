@@ -11,9 +11,6 @@ import java.util.Map;
 @Mapper
 public interface DbMapper {
 
-    /* ------------------------------数据库实体表------------------------------------ */
-
-
     Object selectObject(@Param("sql") String sql);
 
     DbTable tableOne(@Param("sql") String sql);
