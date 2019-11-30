@@ -41,9 +41,14 @@ public class DbColumn {
     private String columnDefaultVal;
 
     /**
-     * 称用字段名
+     * 原字段名
      */
     private String oldColumnName;
+
+    /**
+     * 字段方言
+     */
+    private String columnDialect;
 
     public DbColumn() {
     }
@@ -72,5 +77,12 @@ public class DbColumn {
         this.oldColumnName = field.getDbFieldNameOld();
         return this;
     }
+
+    public DbColumn newInsert(OnlTableField field, String columnDialect) {
+        this.columnDialect = columnDialect;
+        return this.newInsert(field);
+    }
+
+
 }
 

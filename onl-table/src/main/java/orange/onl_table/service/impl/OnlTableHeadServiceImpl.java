@@ -130,7 +130,8 @@ public class OnlTableHeadServiceImpl extends ServiceImpl<OnlTableHeadMapper, Onl
     @Override
     @Transactional(rollbackFor = {Exception.class})
     public void doDbSync(String code, String synMethod) throws Exception {
-        OnlTableHead head = this.requireOne(code);
+        OnlTableHead head = Optional.ofNullable(baseMapper.selectById(code))
+                .orElseThrow(() -> new OnlException("主键为" + code + "不存在!!!"));
 
         List<OnlTableField> fields = fieldService.list(new LambdaQueryWrapper<OnlTableField>()
                 .eq(OnlTableField::getHeadId, code)
@@ -186,16 +187,16 @@ public class OnlTableHeadServiceImpl extends ServiceImpl<OnlTableHeadMapper, Onl
                 break;
         }
 
-        updateById(Stream.of(head).peek(h -> {
-            h.setIsDbSync(CommonConstant.IS_TRUE_STR);
-            h.setTableNameOld(head.getTableName());
-        }).findFirst().get());
-
-        fieldService.updateBatchById(fields.stream().peek(f -> {
-            f.setDbFieldNameOld(f.getDbFieldName());
-            f.setDbSync(CommonConstant.IS_TRUE);
-        }).collect(Collectors.toList()));
-        indexService.createIndex(code, head.getTableName());
+//        updateById(Stream.of(head).peek(h -> {
+//            h.setIsDbSync(CommonConstant.IS_TRUE_STR);
+//            h.setTableNameOld(head.getTableName());
+//        }).findFirst().get());
+//
+//        fieldService.updateBatchById(fields.stream().peek(f -> {
+//            f.setDbFieldNameOld(f.getDbFieldName());
+//            f.setDbSync(CommonConstant.IS_TRUE);
+//        }).collect(Collectors.toList()));
+//        indexService.createIndex(code, head.getTableName());
     }
 
     @Override

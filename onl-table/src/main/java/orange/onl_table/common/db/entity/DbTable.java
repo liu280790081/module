@@ -8,6 +8,8 @@ import java.util.List;
 @Data
 public class DbTable {
 
+    private String tableCatalog;
+
     private String tableSchema;
 
     private String tableName;

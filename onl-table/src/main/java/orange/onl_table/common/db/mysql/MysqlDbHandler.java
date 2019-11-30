@@ -108,6 +108,11 @@ public class MysqlDbHandler implements IDbHandler {
         return "drop index " + indexName + " on " + tbName;
     }
 
+    @Override
+    public String columnDialect(String columnName) {
+        return "`" + columnName + "`";
+    }
+
     private static String getColumnSql(DbColumn column) {
         String columnName = "`" + column.getColumnName() + "` ";
         String columnType = column.getColumnType().toLowerCase();

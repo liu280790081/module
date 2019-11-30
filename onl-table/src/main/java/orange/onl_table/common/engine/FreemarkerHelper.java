@@ -13,7 +13,7 @@ public class FreemarkerHelper {
 
     private FreemarkerHelper() {}
 
-    public static final String TABLE_TEMPLATE = "com/ido85/icip/system/table/common/engine/tableTemplate.ftl";
+    public static final String TABLE_TEMPLATE = "orange/onl_table/common/engine/tableTemplate.ftl";
 
     private static Configuration b;
 

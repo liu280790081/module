@@ -105,6 +105,10 @@ public interface IDbHandler {
      */
     String indexDropSql(String tbName, String indexName);
 
+    /* ------------------------------- 工具 -------------------------------------- */
+
+    String columnDialect(String columnName);
+
 
     static IDbHandler dbHandler(String database) {
         switch (database) {

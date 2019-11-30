@@ -37,13 +37,12 @@ public class DbServiceImpl implements DbService {
     @Resource
     private DbMapper dbMapper;
 
-    /* ----------------------------------------数据库实体表------------------------------------------------ */
-
     @Override
     public void createDBTable(OnlTableHead head, List<OnlTableField> fields) throws Exception {
+        IDbHandler handler = IDbHandler.dbHandler(dbConfig.getDbName());
         HashMap<String, Object> template = new HashMap<>();
         template.put("head", head);
-        template.put("columns", fields);
+        template.put("columns", fields.stream().map(f -> new DbColumn().newInsert(f, handler.columnDialect(f.getDbFieldName()))).collect(Collectors.toList()));
         String var2 = FreemarkerHelper.generateByUTF8(FreemarkerHelper.TABLE_TEMPLATE, template);
         log.info("template -> {}", var2);
 
@@ -58,6 +57,7 @@ public class DbServiceImpl implements DbService {
         var3.put("hibernate.hbm2ddl.auto", "create");
         var3.put("hibernate.connection.autocommit", false);
         var3.put("hibernate.current_session_context_class", "thread");
+        var3.put("hibernate.temp.use_jdbc_metadata_defaults", false);
         StandardServiceRegistry var5 = (new StandardServiceRegistryBuilder()).applySettings(var3).build();
         MetadataSources var6 = new MetadataSources(var5);
         ByteArrayInputStream var7 = new ByteArrayInputStream(var2.getBytes());

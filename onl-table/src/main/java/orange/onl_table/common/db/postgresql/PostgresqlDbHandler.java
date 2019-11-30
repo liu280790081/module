@@ -32,7 +32,9 @@ public class PostgresqlDbHandler implements IDbHandler {
 
     @Override
     public String tableCheckExistSql(DbTable table) {
-        return null;
+        return "select case when count(table_name) > 0 then 1 else 0 end as res " +
+                "from information_schema.tables " +
+                "where table_name ='" + table.getTableName() +"'";
     }
 
     @Override
@@ -68,5 +70,10 @@ public class PostgresqlDbHandler implements IDbHandler {
     @Override
     public String indexDropSql(String tbName, String indexName) {
         return null;
+    }
+
+    @Override
+    public String columnDialect(String columnName) {
+        return columnName;
     }
 }

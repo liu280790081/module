@@ -5,18 +5,19 @@
         <comment>${head.tableTxt}</comment>
 		<#if columns?exists>
             <#list columns as attr>
-                <#if attr.dbIsKey == 1>
-                    <id unsaved-value="null" name="${attr.dbFieldName}" length="${attr.dbLength}" <#switch attr.dbType?lower_case>
+                <#if attr.isKey == 1>
+                    <id unsaved-value="null" name="${attr.columnDialect}" length="${attr.columnLength}"
+                    <#switch attr.columnType?lower_case>
                         <#case "string"> type="java.lang.String" <#break>
                         <#default> type="java.lang.Long" <#break>
                     </#switch>>
-                    <#switch attr.dbType?lower_case>
+                    <#switch attr.columnType?lower_case>
                         <#case "string"> <generator class="uuid" /> <#break>
                         <#default> <generator class="identity" /> <#break>
                     </#switch>
                     </id>
                 <#else>
-					<property access="property" name="${attr.dbFieldName}" <#switch attr.dbType?lower_case>
+					<property access="property" name="${attr.columnDialect}" <#switch attr.columnType?lower_case>
                         <#case "string"> type="java.lang.String" <#break>
                         <#case "text"> type="text" <#break>
                         <#case "int"> type="java.lang.Integer" <#break>
@@ -26,17 +27,17 @@
                         <#case "decimal"> type="java.math.BigDecimal" <#break>
                         <#case "blob"> type="blob" <#break>
                     </#switch>>
-                        <column name="`${attr.dbFieldName}`"
-                        <#if attr.dbType=='double'|| attr.dbType=='decimal' || attr.dbType=='bigdecimal'>
-                            precision="${attr.dbLength}" scale="${attr.dbPointLength}"
+                        <column name="${attr.columnDialect}"
+                        <#if attr.columnType=='double'|| attr.columnType=='decimal' || attr.columnType=='bigdecimal'>
+                            precision="${attr.columnLength}" scale="${attr.numericScale}"
                         <#else>
-                            length="${attr.dbLength}"
+                            length="${attr.columnLength}"
                         </#if>
-                        <#if attr.dbDefaultVal?exists&&attr.dbDefaultVal!=''>
-                            default="${attr.dbDefaultVal}"
+                        <#if attr.columnDefaultVal?exists&&attr.columnDefaultVal!=''>
+                            default="${attr.columnDefaultVal}"
                         </#if>
-                            not-null="<#if attr.dbIsNull == 1>false<#else>true</#if>" unique="false">
-                            <comment>${attr.dbFieldTxt}</comment>
+                            not-null="<#if attr.isNullable == 1>false<#else>true</#if>" unique="false">
+                            <comment>${attr.columnComment}</comment>
                         </column>
                     </property>
                 </#if>

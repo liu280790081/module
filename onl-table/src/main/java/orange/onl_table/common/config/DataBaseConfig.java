@@ -33,7 +33,7 @@ public class DataBaseConfig {
             case "oracle":
                 return "org.hibernate.dialect.OracleDialect";
             case "postgresql":
-                return "org.hibernate.dialect.PostgreSQLDialect";
+                return "org.hibernate.dialect.PostgreSQL82Dialect";
             case "sqlserver":
                 return "org.hibernate.dialect.SQLServerDialect";
             default:
