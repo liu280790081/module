@@ -17,7 +17,7 @@ public class PostgresqlDbHandler implements IDbHandler {
 
     @Override
     public String tableDropSql(String tbName) {
-        return null;
+        return "drop table if exists table " + tbName;
     }
 
     @Override

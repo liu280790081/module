@@ -118,9 +118,9 @@ public class OnlTableController {
     @DeleteMapping({"/delete", "/removeRecord"})
     public boolean a(HttpServletRequest req, @RequestBody List<String> codes) throws OnlException, SQLException {
         boolean isDelete = req.getRequestURI().contains("/delete");
-        if (isDelete) {
-            throw new OnlException("删除表风险大，请先使用移除表！！！");
-        }
+//        if (isDelete) {
+//            throw new OnlException("删除表风险大，请先使用移除表！！！");
+//        }
 
         headService.deleteRecordAndTable(codes, isDelete);
         return true;

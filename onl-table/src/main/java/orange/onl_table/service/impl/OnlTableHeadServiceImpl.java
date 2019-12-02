@@ -187,16 +187,16 @@ public class OnlTableHeadServiceImpl extends ServiceImpl<OnlTableHeadMapper, Onl
                 break;
         }
 
-//        updateById(Stream.of(head).peek(h -> {
-//            h.setIsDbSync(CommonConstant.IS_TRUE_STR);
-//            h.setTableNameOld(head.getTableName());
-//        }).findFirst().get());
-//
-//        fieldService.updateBatchById(fields.stream().peek(f -> {
-//            f.setDbFieldNameOld(f.getDbFieldName());
-//            f.setDbSync(CommonConstant.IS_TRUE);
-//        }).collect(Collectors.toList()));
-//        indexService.createIndex(code, head.getTableName());
+        updateById(Stream.of(head).peek(h -> {
+            h.setIsDbSync(CommonConstant.IS_TRUE_STR);
+            h.setTableNameOld(head.getTableName());
+        }).findFirst().get());
+
+        fieldService.updateBatchById(fields.stream().peek(f -> {
+            f.setDbFieldNameOld(f.getDbFieldName());
+            f.setDbSync(CommonConstant.IS_TRUE);
+        }).collect(Collectors.toList()));
+        indexService.createIndex(code, head.getTableName());
     }
 
     @Override
@@ -233,8 +233,9 @@ public class OnlTableHeadServiceImpl extends ServiceImpl<OnlTableHeadMapper, Onl
             List<OnlTableHead> needDrop = var3.stream()
                     .filter(a -> dbService.checkDBTableExist(a.getTableName()))
                     .collect(Collectors.toList());
+            IDbHandler handler = IDbHandler.dbHandler(dbConfig.getDbName());
             for (OnlTableHead head : needDrop) {
-                String sql = IDbHandler.dbHandler(dbConfig.getDbName()).tableDropSql(head.getTableName());
+                String sql = handler.tableDropSql(head.getTableName());
                 baseMapper.executeDDL(sql);
             }
         }

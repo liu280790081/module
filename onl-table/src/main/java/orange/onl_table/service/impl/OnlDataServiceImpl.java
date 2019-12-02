@@ -257,7 +257,7 @@ public class OnlDataServiceImpl implements OnlDataService {
                 if (MapUtils.isEmpty(fkJson)) {
                     throw new OnlException("表" + subHead.getTableNameOld() + "与主表没有依赖关系！！！");
                 }
-                subDataMap.put(subHead.getId(), this.dataList(head, fields, new JSONObject(fkJson)));
+                subDataMap.put(subHead.getId(), this.dataList(subHead, subFields, new JSONObject(fkJson)));
             }
             data.put("subList", subDataMap);
         }
