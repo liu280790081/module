@@ -1,5 +1,8 @@
 package test;
 
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.http.util.Asserts;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class BTest {
@@ -12,6 +15,12 @@ public class BTest {
             System.out.println(x++);
 
         }
+
+//        Assert.assertSame();False();
+//        Asserts.notBlank();
+
+//        ObjectUtils.isNotEmpty()
+
     }
 
 }

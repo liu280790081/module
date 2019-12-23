@@ -1,4 +1,4 @@
-package test;
+package test.java8;
 
 import com.alibaba.fastjson.JSON;
 import org.junit.Test;
@@ -64,9 +64,9 @@ public class LambdaTest {
                 .collect(groupingBy(k -> Arrays.asList(k.getUri(), k.getMethod())));
         System.out.println(JSON.toJSONString(collecta));
 
-        Map<String, String> aaa = esList.stream()
-                .collect(toConcurrentMap(TestParam::getUri, TestParam::getMethod));
-        System.out.println(JSON.toJSONString(aaa));
+//        Map<String, String> aaa = esList.stream()
+//                .collect(toConcurrentMap(TestParam::getUri, TestParam::getMethod));
+//        System.out.println(JSON.toJSONString(aaa));
 
         String collect2 = esList.stream()
                 .map(TestParam::getMethod)
