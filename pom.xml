@@ -12,6 +12,9 @@
         <module>elasticsearch</module>
         <module>common</module>
         <module>onl-table</module>
+        <module>test</module>
+        <module>flowable</module>
+        <module>flowable-server</module>
     </modules>
 
     <parent>
@@ -40,6 +43,17 @@
         </dependencies>
     </dependencyManagement>
 
+    <repositories>
+        <repository>
+            <id>alimaven</id>
+            <name>aliyun maven</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <layout>default</layout>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
     <build>
         <plugins>
             <!-- 生成可执行jar包 -->

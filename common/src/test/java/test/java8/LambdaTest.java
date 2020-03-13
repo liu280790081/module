@@ -77,7 +77,9 @@ public class LambdaTest {
                 .map(TestParam::getMethod).toArray(String[]::new);
         System.out.println(JSON.toJSONString(a1));
 
-//        esList.stream()
+        boolean res = esList.stream().noneMatch(var -> var.getUri().equals("2"));
+
+        System.out.println(res);
 
         //自定义
 //        List<String> collecta = Stream.of("1", "2", "3").collect(
